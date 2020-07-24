@@ -9,19 +9,33 @@ connect.then((db) => {
 
     console.log('Connected correctly to server');
 
+    //Create and save a entity record
     Dishes.create({
         name: 'Uthappizza',
         description: 'test'
     })
     .then((dish) => {
         console.log(dish);
-
-        return Dishes.find({}).exec();
+        //Find this entity
+        return Dishes.findByIdAndUpdate(dish._id, {
+            $set: { description: 'Updated test'}
+        }, { new: true }
+        ).exec();
     })
-    .then((dishes) => {
-        console.log(dishes);
+    .then( (dish) =>{
+        console.log( dish );
 
-        return Dishes.deleteMany({});
+        dish.comments.push({
+            rating: 5,
+            comment: 'I\'m getting a sinking taste!',
+            author: 'Peter Pan'
+        });
+        return dish.save();
+    })
+    .then((dish) => {
+        console.log(dish);
+
+        return Dishes.deleteOne({});
     })
     .then(() => {
         return mongoose.connection.close();

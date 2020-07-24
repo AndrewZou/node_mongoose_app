@@ -5,4 +5,4 @@
 
 ### 2. Create Mongoose Schemas
 
-### 3. Perform Database operations with Mongoose methods
+### 3. Perform Database operations with Mongoose methods, such as create, save, find, update.
